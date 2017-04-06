@@ -34,6 +34,7 @@ class Login extends Component {
            } else if (nextProps.loginResponse.msg === "foundUser") {
             // console.log(hashHistory)
                hashHistory.push('/');
+
            }
        }
    }   

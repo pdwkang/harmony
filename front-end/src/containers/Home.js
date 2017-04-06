@@ -27,7 +27,7 @@ class Home extends Component {
 
 // go to all. like the array map function
 function mapStateToProps(state){
-  console.log(state.login)
+  // console.log(state.login)
 	return{
 		items: state.getItem
 	}

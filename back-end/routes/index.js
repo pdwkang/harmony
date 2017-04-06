@@ -64,14 +64,20 @@ router.post('/login', (req, res, next) => {
                    var token = randtoken.uid(40);
                    insertToken = "UPDATE user SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE username=?";
                    connection.query(insertToken, [token, username], (error, results)=>{
-                        console.log('############')
-                        console.log(token)
-                        console.log('############')
-                        res.json({
-                            msg:'foundUser',
-                            token: token,
-                            username: username
-                        })    
+                        if (error) throw error;
+                        var selectQuery = "SELECT * FROM user WHERE token = ?"
+                        connection.query(selectQuery, [token], (error, results)=>{
+                            if (error) throw error;
+                            console.log('############')
+                            console.log(results)
+                            console.log('############')                            
+                            res.json({
+                                msg:'foundUser',
+                                token: token,
+                                username: username,
+                                data:results
+                            })    
+                        })
                     })
                 }
             }
@@ -79,6 +85,26 @@ router.post('/login', (req, res, next) => {
         connection.release()                    
     })
 })
+
+// Logout
+router.post('/logout', (req, res, next) => {
+    pool.getConnection((err, connection)=> { 
+        var token = req.body.token;
+        // console.log(req.body)
+        var deleteTokenQuery = `UPDATE user SET token = NULL, token_exp = NULL WHERE token = ?`;
+        connection.query(deleteTokenQuery, [token], (error, results) => {
+            if (error) throw error;
+            // console.log('Results: ' + results);
+            res.json({
+                msg:'logged out',
+                token: '',
+                username: ''
+            });
+        });
+    });
+});
+
+
 // Make a register post route
 router.post('/register', (req, res, next) => {
     pool.getConnection((err, connection)=> {     
@@ -89,7 +115,17 @@ router.post('/register', (req, res, next) => {
                 var insertUserQuery = 'INSERT INTO user (name, email, username, password) VALUES' +
                 "(?,?,?,?)";
                 connection.query(insertUserQuery, [req.body.name, req.body.email, req.body.username, bcrypt.hashSync(req.body.password)], (error, results, field) => {
-                    res.json({msg: 'userInserted'})
+                    // res.json({msg: 'userInserted'})
+                    var token = randtoken.uid(40);
+                    var insertToken = "UPDATE user SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE username=?";
+                   connection.query(insertToken, [token, req.body.username], (error, results)=>{
+                        res.json({
+                            msg:'foundUser',
+                            token: token,
+                            username: req.body.username,
+                            job:results.job
+                        })    
+                    })
                 })
             }else{
                 res.json({msg: "userNameTaken"})
@@ -98,6 +134,8 @@ router.post('/register', (req, res, next) => {
         connection.release()                
     })
 });
+
+
 router.get('/account/:username', function(req, res, next) {
     pool.getConnection((err, connection)=> {         
         const selectQuery = 'SELECT * FROM user WHERE username = ?';
@@ -109,6 +147,8 @@ router.get('/account/:username', function(req, res, next) {
         connection.release()                            
     }) 
 })
+
+
 router.post('/submitBid/', function(req, res, next) {
     pool.getConnection((err, connection)=> {             
         const selectQuery = 'SELECT current_bid, starting_bid FROM item WHERE id = ?';
@@ -159,4 +199,21 @@ router.post('/submitBid/', function(req, res, next) {
         connection.release()                
     })
 })
+
+
+router.get('/artists', function(req, res, next) {
+    pool.getConnection((err, connection)=> {         
+        const selectQuery = 'SELECT * FROM user WHERE job = ?';
+        connection.query(selectQuery, ['artist'], (error, results, field) => {
+            if (error) throw error;
+            // console.log(results)
+            res.json({
+                artists:results
+            })              
+        });
+        connection.release()                            
+    }) 
+})
+
+
 module.exports = router;

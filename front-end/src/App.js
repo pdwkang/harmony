@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux'
-
+import LoggedInNavBar from './LoggedInNavBar.js';
+import SignUpNavBar from './SignUpNavBar.js';
 
 class App extends Component {
     render() {
         return (
             <div className='ebay-wrapper'>
-            	<div className='sign-in-nav-bar-wrapper'>
-                    <div className='logo'><Link to='/'>Logo / Home</Link></div>
-                    <div className='search-bar-wrapper'>
-                        <Link to={'/account/' + this.props.user.username}>My Account</Link> or
-                        <Link to="/login">Sign in</Link> or
-                        <Link to="/register">Register</Link>
-                            &nbsp;&nbsp;&nbsp;
-                        <form>
-                            <input type='text' placeholder=" &nbsp;Search Items"/>
-                            <button className='btn btn-warning'>Search</button>
-                        </form>
-                    </div>
-            	</div>
+            	{this.props.loggedIn}
             	<div className='body-wrapper'>
                     {this.props.children}
             	</div>
@@ -32,15 +20,19 @@ class App extends Component {
 
 // go to all. like the array map function
 function mapStateToProps(state){
-  console.log(state.login)
+  // console.log('############')
+  // console.log(state.login)
+  // console.log('############')
+  if(state.login.token){
     return{
-        user: state.login
+        loggedIn: <LoggedInNavBar/>
     }
+  }else{
+    return{
+        loggedIn: <SignUpNavBar/>
+    }
+  }
 }
 
 
-
-
-
 export default connect(mapStateToProps)(App);
-// export default App;

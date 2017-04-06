@@ -1,15 +1,14 @@
 import $ from 'jquery';
-// import axios from 'axios';
 
 export default function(token){
-    console.log(token);
+    console.log('action token: ' + token);
 	var thePromise = $.ajax({
 		method: "POST",
 		url: "http://localhost:3000/logout",
 		data: {token: token}
 	});
 	return{
-		type: "AUTH",
+		type: "LOGOUT",
 		payload: thePromise
 	}
 }
