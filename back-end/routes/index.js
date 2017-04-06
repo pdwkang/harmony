@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var config = require('../config/config');
 var router = express.Router();
 var randtoken = require('rand-token')
+var stripe = require('stripe')(config.stripeToken);
 var pool = mysql.createPool({
     host: config.host,
     user: config.userName,
@@ -16,6 +17,16 @@ var bcrypt = require('bcrypt-nodejs');
 // var checkHash = bcrypt.compareSync("x", hashedPassword);
 // console.log(checkHash);
 /* GET home page. */
+
+
+// Multer module
+var multer = require('multer');
+var upload = multer({dest: 'public/images'});
+var type = upload.single('profileImg');
+var fs = require('fs');
+
+
+
 router.get('/', function(req, res, next) {
     // Instead of always using the same connection, we can use a pool of connections.
     // we just grab teh pool (defined above), use it, and then release it back to the pool.
@@ -50,16 +61,16 @@ router.post('/login', (req, res, next) => {
         connection.query(selectQuery,[username], (error, results, fields) => {
             if(results.length === 0){
                 res.json({msg: 'noAccount'})
-                console.log('############')
-                console.log('Wrong username')
-                console.log('############')     
+                // console.log('############')
+                // console.log('Wrong username')
+                // console.log('############')     
             }else{
                 checkHash = bcrypt.compareSync(password, results[0].password);
                 if(checkHash == false){
                     res.json({msg: "badPassword"});
-                    console.log('############')
-                    console.log('Wrong Password')
-                    console.log('############')       
+                    // console.log('############')
+                    // console.log('Wrong Password')
+                    // console.log('############')       
                 }else{
                    var token = randtoken.uid(40);
                    insertToken = "UPDATE user SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE username=?";
@@ -68,9 +79,9 @@ router.post('/login', (req, res, next) => {
                         var selectQuery = "SELECT * FROM user WHERE token = ?"
                         connection.query(selectQuery, [token], (error, results)=>{
                             if (error) throw error;
-                            console.log('############')
-                            console.log(results)
-                            console.log('############')                            
+                            // console.log('############')
+                            // console.log(results)
+                            // console.log('############')                            
                             res.json({
                                 msg:'foundUser',
                                 token: token,
@@ -112,18 +123,26 @@ router.post('/register', (req, res, next) => {
         connection.query(selectQuery,[req.body.username], (error, results, fields) => {
             // console.log(results)
             if(results.length === 0){
-                var insertUserQuery = 'INSERT INTO user (name, email, username, password) VALUES' +
-                "(?,?,?,?)";
-                connection.query(insertUserQuery, [req.body.name, req.body.email, req.body.username, bcrypt.hashSync(req.body.password)], (error, results, field) => {
+                var insertUserQuery = 'INSERT INTO user (name, email, username, password, job) VALUES' +
+                "(?,?,?,?,?)";
+                connection.query(insertUserQuery, [req.body.name, req.body.email, req.body.username, bcrypt.hashSync(req.body.password),req.body.job], (error, results, field) => {
                     // res.json({msg: 'userInserted'})
                     var token = randtoken.uid(40);
                     var insertToken = "UPDATE user SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE username=?";
                    connection.query(insertToken, [token, req.body.username], (error, results)=>{
-                        res.json({
-                            msg:'foundUser',
-                            token: token,
-                            username: req.body.username,
-                            job:results.job
+                    var selectQuery = "SELECT * FROM user WHERE token = ?"
+                    // console.log('i made it this far')
+                        connection.query(selectQuery, [token], (error, results)=>{
+                            if (error) throw error;
+                            // console.log('############')
+                            // console.log(results)
+                            // console.log('############')                            
+                            res.json({
+                                msg:'foundUser',
+                                token: token,
+                                username: req.body.username,
+                                data:results
+                            })    
                         })    
                     })
                 })
@@ -175,9 +194,9 @@ router.post('/submitBid/', function(req, res, next) {
                 var getUserId = "SELECT id FROM user WHERE token = ?"
                 // console.log(req.body.userToken)
                 connection.query(getUserId, [req.body.userToken], (error2, results2) => {
-                    console.log('############')
-                    console.log(results2)
-                    console.log('############')
+                    // console.log('############')
+                    // console.log(results2)
+                    // console.log('############')
                     if(results2.length > 0){
                         var insertAuctionsQuery = " UPDATE item SET high_bidder_id = ?, current_bid = ? " +
                             "WHERE id = ?";
@@ -200,7 +219,6 @@ router.post('/submitBid/', function(req, res, next) {
     })
 })
 
-
 router.get('/artists', function(req, res, next) {
     pool.getConnection((err, connection)=> {         
         const selectQuery = 'SELECT * FROM user WHERE job = ?';
@@ -216,4 +234,34 @@ router.get('/artists', function(req, res, next) {
 })
 
 
+router.post('/profilePic', type, (req, res, next) => {
+    // console.log(req.file)
+    var token = req.body.token;
+    var tempPath = req.file.path;
+    var imgName = req.file.originalname;
+    var targetPath = `public/images/${imgName}`;
+    var insertQuery = "UPDATE user SET photo = ? WHERE token = ?";
+    pool.getConnection((err, connection)=> {         
+        connection.query(insertQuery, [imgName, token], (DBerror, results, fields)=>{
+            if(DBerror) throw DBerror; 
+            // console.log('error1')
+            // res.json("uploaded succesfully"); 
+            fs.readFile(tempPath, (readError, readContents)=>{
+                if(readError) throw readError; 
+                // console.log('error2')
+                fs.writeFile(targetPath,readContents, (writeError)=>{
+                    if(writeError) throw writeError; 
+                    // console.log('error3')
+                    fs.unlink(tempPath, (err)=>{
+                        // console.log('error4')
+                        if(err) throw err
+                    })
+                })
+            })
+        })
+    });
+});
+
+
 module.exports = router;
+

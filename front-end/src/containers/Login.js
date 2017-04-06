@@ -19,7 +19,8 @@ class Login extends Component {
      var password = event.target[1].value;
      this.props.LoginAction({
        username: userName,
-       password: password
+       password: password,
+       automatic:'no'
      });
      
    }

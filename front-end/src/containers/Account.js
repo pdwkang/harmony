@@ -17,15 +17,16 @@ class Account extends Component {
     componentDidMount() {
       this.props.FetchAccount(this.props.params.username);
       // console.log(this.props.params.username)
-      if(this.props.user.data[0].job === 'artist'){
-        this.setState({
-          job: <ArtistAccount/>
-        })
-      }else{
-        this.setState({
-          job: <UserAccount/>
-        })
-      }
+        if(this.props.user.data[0].job === 'artist'){
+          this.setState({
+            job: <ArtistAccount/>
+          })
+        }else{
+          this.setState({
+            job: <UserAccount/>
+          })
+        }
+      
     }     
     render() {
       // var accountName = ''
