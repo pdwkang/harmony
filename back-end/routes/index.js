@@ -319,7 +319,7 @@ router.get('/artistData/:id', function(req, res, next) {
 })
 
 router.post('/addArtwork', artImg, (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     var id = req.body.id;
     var title = req.body.title;
     var description = req.body.description;
@@ -337,31 +337,18 @@ router.post('/addArtwork', artImg, (req, res, next) => {
     // var getUserQuery = `SELECT id FROM users WHERE token = ?`;
     var insertQuery = 'INSERT INTO item (name, description, seller_id, starting_bid, current_bid, buy_now_price, tags, image_url) VALUES (?,?,?,?,?,?,?,?)'
     pool.getConnection((err, connection)=> {         
-        console.log('asd')
         connection.query(insertQuery, [title,description,id,startPrice,'0',buyNow,tags,imgName], (error1, results1) => {
-            console.log('asd')
-            // if (error1) throw error1;
-            // userId = results1[0].id;
-            // var insertListingQuery = `INSERT INTO auctions (user_id, title, description, starting_bid, current_bid, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-            // connection.query(insertListingQuery, [userId, title, desc, usd, usd, start, end], (error2, results2) => {
-                // if (error2) throw error2;
-            //     auctionId = results2.insertId;
-            //     var insertImgQuery = `INSERT INTO item (auction_id, url) VALUES (?, ?)`;
-                fs.readFile(tempPath, (readError, readContents) => {
-                    fs.writeFile(targetPath, readContents, (writeError) => {
-                        if (writeError) throw writeError;
-                        // connection.query(insertImgQuery, [auctionId, imgName], (error3, results3) => {
-                            // if (error3) throw error3;
-                            fs.unlink(tempPath, (unlinkError) => {
-                                if (unlinkError) throw unlinkError;
-                                res.json({
-                                    msg: `Listing ${auctionId} created`
-                                });
-                            });
+            fs.readFile(tempPath, (readError, readContents) => {
+                fs.writeFile(targetPath, readContents, (writeError) => {
+                    if (writeError) throw writeError;
+                    fs.unlink(tempPath, (unlinkError) => {
+                        if (unlinkError) throw unlinkError;
+                        res.json({
+                            msg: `Listing ${auctionId} created`
                         });
                     });
-                // });
-            // });
+                });
+            });
         });
         connection.release()
     });
