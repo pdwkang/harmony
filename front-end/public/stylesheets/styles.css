@@ -1,14 +1,78 @@
-/* line 7, ../../compass/sass/styles.scss */
+/* line 5, ../../compass/sass/_artistAccount.scss */
+.my-account-page {
+  max-width: 919px;
+  margin: auto;
+}
+
+/* line 9, ../../compass/sass/_artistAccount.scss */
+.profileImage {
+  width: 100%;
+}
+
+/* line 13, ../../compass/sass/_artistAccount.scss */
+.dark-button {
+  background-color: orange;
+  color: #232F3E;
+}
+
+/* line 18, ../../compass/sass/_artistAccount.scss */
+.uploading {
+  animation: uploadColor 1s linear infinite;
+}
+
+@keyframes uploadColor {
+  0% {
+    color: black;
+  }
+  50% {
+    color: blue;
+  }
+  100% {
+    color: black;
+  }
+}
+/* line 33, ../../compass/sass/_artistAccount.scss */
+.side-bar-content {
+  padding: 70px 20px;
+  background-color: rgba(0, 0, 10, 0.85);
+  min-height: 100vh;
+  width: 400px;
+  color: white;
+}
+
+/* line 41, ../../compass/sass/_artistAccount.scss */
+.artwork-wrapper {
+  padding: 100px 50px;
+  text-align: center;
+}
+/* line 44, ../../compass/sass/_artistAccount.scss */
+.artwork-wrapper img {
+  max-width: 100%;
+  height: 200px;
+  margin-bottom: 40px;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid gainsboro;
+}
+
+/* line 53, ../../compass/sass/_artistAccount.scss */
+.add-item {
+  position: absolute;
+  top: 60px;
+  right: 50px;
+}
+
+/* line 8, ../../compass/sass/styles.scss */
 body {
   background-color: #fff5f5;
   overflow-x: hidden;
 }
 
-/* line 12, ../../compass/sass/styles.scss */
+/* line 13, ../../compass/sass/styles.scss */
 .ebay-wrapper {
   min-height: 100vh;
 }
-/* line 14, ../../compass/sass/styles.scss */
+/* line 15, ../../compass/sass/styles.scss */
 .ebay-wrapper .sign-in-nav-bar-wrapper {
   left: 0;
   top: 0;
@@ -19,19 +83,19 @@ body {
   height: 50px;
   line-height: 50px;
 }
-/* line 22, ../../compass/sass/styles.scss */
+/* line 23, ../../compass/sass/styles.scss */
 .ebay-wrapper .logo {
   margin-left: 20px;
 }
-/* line 24, ../../compass/sass/styles.scss */
+/* line 25, ../../compass/sass/styles.scss */
 .ebay-wrapper .logo a {
   color: white;
 }
-/* line 27, ../../compass/sass/styles.scss */
+/* line 28, ../../compass/sass/styles.scss */
 .ebay-wrapper .logo a:hover {
   opacity: 0.8;
 }
-/* line 32, ../../compass/sass/styles.scss */
+/* line 33, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper {
   display: inline-block;
   position: absolute;
@@ -39,25 +103,25 @@ body {
   top: 0;
   color: white;
 }
-/* line 37, ../../compass/sass/styles.scss */
+/* line 38, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper a {
   color: white;
   margin: 0 10px;
 }
-/* line 40, ../../compass/sass/styles.scss */
+/* line 41, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper a:hover {
   opacity: 0.8;
 }
-/* line 44, ../../compass/sass/styles.scss */
+/* line 45, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper form {
   display: inline-block;
 }
-/* line 46, ../../compass/sass/styles.scss */
+/* line 47, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper form input {
   height: 30px;
   border-radius: 5%;
 }
-/* line 50, ../../compass/sass/styles.scss */
+/* line 51, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper form button {
   height: 30px;
   border: none;
@@ -66,40 +130,40 @@ body {
   color: #232F3E;
   font-weight: 800;
 }
-/* line 59, ../../compass/sass/styles.scss */
+/* line 60, ../../compass/sass/styles.scss */
 .ebay-wrapper .search-bar-wrapper form button:hover {
   opacity: 0.8;
 }
-/* line 64, ../../compass/sass/styles.scss */
+/* line 65, ../../compass/sass/styles.scss */
 .ebay-wrapper .body-wrapper {
   padding: 8%;
   padding-top: 50px;
 }
-/* line 68, ../../compass/sass/styles.scss */
+/* line 69, ../../compass/sass/styles.scss */
 .ebay-wrapper .body-wrapper .body-content-wrapper .each-item-wrapper {
   height: 400px;
   margin-top: 20px;
   padding: 20px;
   text-align: center;
 }
-/* line 79, ../../compass/sass/styles.scss */
+/* line 80, ../../compass/sass/styles.scss */
 .ebay-wrapper .body-wrapper .body-content-wrapper .each-item-wrapper .each-item-image {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 20px;
   background-color: white;
 }
-/* line 87, ../../compass/sass/styles.scss */
+/* line 88, ../../compass/sass/styles.scss */
 .ebay-wrapper .body-wrapper .body-content-wrapper .each-item-wrapper .each-item-image img {
   height: 300px;
   max-width: 100%;
 }
-/* line 95, ../../compass/sass/styles.scss */
+/* line 96, ../../compass/sass/styles.scss */
 .ebay-wrapper .body-wrapper .body-content-wrapper .each-item-wrapper .each-item-description {
   align-items: center;
   justify-content: flex-start;
 }
 
-/* line 106, ../../compass/sass/styles.scss */
+/* line 107, ../../compass/sass/styles.scss */
 .register-form-wrapper, .login-form-wrapper {
   margin: auto;
   margin-top: 80px;
@@ -109,7 +173,7 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.1);
 }
-/* line 114, ../../compass/sass/styles.scss */
+/* line 115, ../../compass/sass/styles.scss */
 .register-form-wrapper .register-form-header, .login-form-wrapper .register-form-header {
   height: 70px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -117,21 +181,21 @@ body {
   font-size: 20px;
   line-height: 30px;
 }
-/* line 120, ../../compass/sass/styles.scss */
+/* line 121, ../../compass/sass/styles.scss */
 .register-form-wrapper .register-form-header .register-form-description, .login-form-wrapper .register-form-header .register-form-description {
   font-size: 15px;
   color: rgba(0, 0, 0, 0.3);
 }
-/* line 125, ../../compass/sass/styles.scss */
+/* line 126, ../../compass/sass/styles.scss */
 .register-form-wrapper .register-form, .register-form-wrapper .login-form, .login-form-wrapper .register-form, .login-form-wrapper .login-form {
   margin-top: 30px;
 }
-/* line 127, ../../compass/sass/styles.scss */
+/* line 128, ../../compass/sass/styles.scss */
 .register-form-wrapper .register-form input, .register-form-wrapper .login-form input, .login-form-wrapper .register-form input, .login-form-wrapper .login-form input {
   margin-top: 14px;
   height: 40px;
 }
-/* line 131, ../../compass/sass/styles.scss */
+/* line 132, ../../compass/sass/styles.scss */
 .register-form-wrapper .register-form button, .register-form-wrapper .login-form button, .login-form-wrapper .register-form button, .login-form-wrapper .login-form button {
   width: 100%;
   height: 40px;
@@ -141,12 +205,12 @@ body {
   margin-bottom: 20px;
 }
 
-/* line 141, ../../compass/sass/styles.scss */
+/* line 142, ../../compass/sass/styles.scss */
 .register-form-wrapper {
   display: inline-block;
 }
 
-/* line 144, ../../compass/sass/styles.scss */
+/* line 145, ../../compass/sass/styles.scss */
 .register-form-wrapper-artist {
   display: inline-block;
   margin: auto;
@@ -157,7 +221,7 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.1);
 }
-/* line 153, ../../compass/sass/styles.scss */
+/* line 154, ../../compass/sass/styles.scss */
 .register-form-wrapper-artist .register-form-header {
   height: 70px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -165,21 +229,21 @@ body {
   font-size: 20px;
   line-height: 30px;
 }
-/* line 159, ../../compass/sass/styles.scss */
+/* line 160, ../../compass/sass/styles.scss */
 .register-form-wrapper-artist .register-form-header .register-form-description {
   font-size: 15px;
   color: rgba(0, 0, 0, 0.3);
 }
-/* line 164, ../../compass/sass/styles.scss */
+/* line 165, ../../compass/sass/styles.scss */
 .register-form-wrapper-artist .register-form, .register-form-wrapper-artist .login-form {
   margin-top: 30px;
 }
-/* line 166, ../../compass/sass/styles.scss */
+/* line 167, ../../compass/sass/styles.scss */
 .register-form-wrapper-artist .register-form input, .register-form-wrapper-artist .login-form input {
   margin-top: 14px;
   height: 40px;
 }
-/* line 170, ../../compass/sass/styles.scss */
+/* line 171, ../../compass/sass/styles.scss */
 .register-form-wrapper-artist .register-form button, .register-form-wrapper-artist .login-form button {
   width: 100%;
   height: 40px;

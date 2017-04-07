@@ -11,10 +11,10 @@ import App from './App';
 import Product from './containers/Product.js';
 import Home from './containers/Home.js';
 import Login from './containers/Login.js';
-// import Logout from './containers/Logout.js';
 import Register from './containers/Register.js';
 import Account from './containers/Account.js';
 import Artists from './containers/Artists.js';
+import MyArtwork from './containers/MyArtwork.js';
 
 
 // Styles
@@ -52,6 +52,7 @@ ReactDOM.render(
 				<Route path="register" component={Register} />
 				<Route path="account/:username" component={Account} />
 				<Route path="artists" component={Artists} />
+				<Route path="myArtwork" component={MyArtwork} />
 			</Route>
 		</Router>
 	</Provider>,

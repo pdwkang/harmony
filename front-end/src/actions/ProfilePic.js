@@ -15,7 +15,7 @@ export default function(profilePic){
         contentType: false
 	});
 	return{
-		type: "PROFILE_PIC",
+		type: "LOGIN",
 		payload: thePromise
 	}
 }

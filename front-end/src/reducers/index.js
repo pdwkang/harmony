@@ -5,6 +5,8 @@ import LoginReducer from './LoginReducer.js';
 import GetAccountReducer from './GetAccountReducer.js';
 import BidReducer from './BidReducer.js';
 import Artists from './Artists.js';
+import ArtistData from './ArtistData.js';
+
 
 const rootReducer = combineReducers({
 	getItem: GetItemReducer,
@@ -12,7 +14,8 @@ const rootReducer = combineReducers({
 	login: LoginReducer,
 	account: GetAccountReducer,
 	bid: BidReducer,
-	artists: Artists
+	artists: Artists,
+	artistData: ArtistData
 })
 
 export default rootReducer;

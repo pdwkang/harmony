@@ -61,7 +61,7 @@ class Product extends Component {
           <div className="col-xs-12">
             <div className="row">
               <div className="col-md-4">
-                <img className="img-responsive" alt='a' src={item.image_url}/>
+                <img className="img-responsive" alt='a' src={'http://localhost:3000/images/' + item.image_url}/>
               </div>
               <div className="col-md-8">
                 <div className="row">

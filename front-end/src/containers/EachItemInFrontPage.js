@@ -8,9 +8,9 @@ class EachItemInFrontPage extends Component {
       var routedUrl = `/products/${this.props.item.id}`
       return(
         <div className='each-item-wrapper col-sm-6'>
-          <div className='each-item-image '>
+          <div className='each-item-image'>
             <Link to={routedUrl}>
-              <img alt='a' src={this.props.item.image_url}/>
+              <img alt='a' src={'http://localhost:3000/images/' + this.props.item.image_url}/>
             </Link>
           </div>
           <div className='each-item-description '>
